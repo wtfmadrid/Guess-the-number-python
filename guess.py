@@ -1,27 +1,30 @@
-import random 
-def guessNumber(n, target):
-    lo,hi = 1, len(n) - 1
-    steps = 0
-    while lo <= hi:
-        mid = (lo + hi)//2
-        steps+=1
-        if target == mid:
-            return 'correct'
-        elif target < mid:
-            lo = mid + 1
-        else:
-            hi = mid - 1
-    return -1
+import random
 
-def playGuessNumberGame():
-    # Set the range of numbers
+def guessNumberGame():
     lower_bound = 1
-    upper_bound = 100
+    upper_bound = 10
     target_number = random.randint(lower_bound, upper_bound)
 
     print(f"Welcome to the Guess the Number game! Guess a number between {lower_bound} and {upper_bound}.")
 
-    # Let the player guess the number
-    player_guess = guessNumber(upper_bound, target_number)
+    steps = 0
+
+    while True:
+        try:
+            player_guess = int(input("Enter your guess: "))
+            steps += 1
+            if not lower_bound <= player_guess <= upper_bound:
+                print(f"Out of bounds, please stay inbound. Range is {lower_bound} to {upper_bound}")
+            if player_guess == target_number:
+                print(f"Congratulations! You guessed the number {target_number} in {steps} steps.")
+                break
+            elif player_guess < target_number:
+                print("Try for a higher number.")
+            else:
+                print("Try for a lower number.")
+        except ValueError:
+            print("Invalid input! Please enter a valid number.")
+        
+
 if __name__ == "__main__":
-    playGuessNumberGame()
+    guessNumberGame()
